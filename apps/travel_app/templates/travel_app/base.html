@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device=width, initial-scale=1.0">
+        <title>Travel Guide</title>
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        {% load staticfiles %}
+        <link rel="stylesheet" href="{% static 'travel_app/css/main.css' %}" media="screen" title="no title"  charset="utf-8">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    </head>
+    <body>
+        <nav class="navigation">
+            {% if not request.session.username %}
+                <a class="main-title" href="/">TRAVEL GUIDE</a>
+                <div class="nav-right">
+                    <form action="/login" method="post">
+                        {% csrf_token %}
+                        <input type="text" placeholder="Username" name="username">
+                        <input type="password" placeholder="Password" name="pw_login">
+                        <input type="submit" value="login">
+                    </form>
+                </div>
+            {% endif %}
+            {% if request.session.username %}
+                <a class="main-title" href="/main">TRAVEL GUIDE</a>
+                <div class="nav-right">
+                    <a href="/profile/{{ request.session.id }}">Profile</a>|
+                    <a href="/logout">Logout</a>
+                </div>
+            {% endif %}
+        </nav>
+        {% block content %}{% endblock content %}
+        <script src="{% static 'travel_app/js/main.js' %}"></script>
+    </body>
+</html>

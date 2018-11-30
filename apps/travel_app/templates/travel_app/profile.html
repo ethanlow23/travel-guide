@@ -1,0 +1,29 @@
+{% extends "./base.html" %}
+
+{% block content %}
+<div class="body-container">
+    <div class="page-body">
+        <div class="user-info">
+            <h2>First Name: {{ user.first_name }}</h2>
+            <h2>Last Name: {{ user.last_name }}</h2>
+            <h2>Username: {{ user.username }}</h2>
+            <h2>You have visited {{ places.count }} venue(s)</h2>
+            <ul>
+                {% for place in places %}
+                    <li><h2>{{ place.name }}</h2></li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="user-reviews">
+            <div class="places-reviewed">
+                <h1>Your Reviews:</h1>
+                {% for review in reviews %}
+                    <p>{{ review.place.name }} - {{ review.rating }} stars</p>
+                    <p>--- {{ review.description }}</p>
+                    <div class="review-break"></div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,244 @@
+.error {
+    color: red;
+    font-size: small;
+}
+.navigation {
+    background-color: yellowgreen;
+    padding: 2em 1.5em;
+}
+.main-title {
+    text-decoration: none;
+    color: white;
+    font-size: 2.5em;
+    font-weight: bold;
+    font-family: fantasy;
+}
+.nav-right {
+    float: right;
+    padding-top: 0.5em;
+}
+.nav-right a {
+    text-decoration: none;
+    color: white;
+    font-size: 1.5em;
+    font-weight: bold;
+    padding: 0em 0.5em;
+}
+.register {
+    width: 30%;
+    margin: auto;
+}
+.register label {
+    display: inline;
+    font-size: 1.5em;
+}
+.register input[type=text], .register input[type=password] {
+    display: block;
+    margin-bottom: 2em;
+    width: 15em;
+    font-size: 1.5em;
+}
+.head-container {
+    background-image: url(../img/background.png);
+    background-size: cover;
+    background-position: center;
+    height: 18em;
+}
+.page-header {
+    text-align: center;
+    width: 80%;
+    margin: auto;
+}
+.page-header form {
+    padding-top: 8em;
+}
+.body-container {   
+    z-index: -1;
+}
+.page-body {
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+}
+.categories {
+    text-align: center;
+    padding: 1em 0em;
+}
+.category {
+    display: inline-block;
+    width: 16em;
+}
+.categories input {
+    visibility: hidden;
+}
+.categories label {
+    cursor: pointer;
+}
+.category-img {
+    width: 15em;
+    height: 12em;
+}
+.places-list {
+    display: inline-block;
+    width: 65%;
+}
+.side-bar {
+    display: inline-block;
+    vertical-align: top;
+    width: 30%;
+    padding-left: 2em;
+    border-left: 1px solid black;
+}
+.side-popular, .side-top {
+    height: 30em;
+}
+.places-info {
+    display: inline-block;
+    vertical-align: top;
+    width: 80%;
+    margin-left: 8em;
+}
+.pagination {
+    padding-top: 1em;
+    font-size: 1.5em;
+}
+.pagination input {
+    visibility: hidden;
+}
+.pagination label {
+    cursor: pointer;
+    color: blue;
+}
+.body-container {
+    padding: 2em 0em;
+}
+.place-img {
+    display: inline-block;
+    width: 30%;
+}
+.place-info {
+    display: inline-block;
+    vertical-align: top;
+    width: 65%;
+}
+.place-rating {
+    margin-top: 1em;
+}
+.place-stars{
+    max-width: 2em;
+}
+.half {
+    position: absolute;
+    width: 1em;
+    height: 2em;
+    background-color: white;
+    margin-left: 1em;
+}
+.place-body {
+    display: inline-block;
+    width: 65%;
+    padding: 1em 0em;
+}
+.side-info {
+    display: inline-block;
+    vertical-align: top;
+    width: 30%;
+    padding-left: 1em;
+}
+#map {
+    width: 100%;
+    height: 30em;
+}
+.review-desc {
+    font-size: 1.5em;
+}
+.review-user {
+    font-weight: bold;
+    font-style: italic;
+    font-size: 1.5em;
+    border-bottom: 1px solid gray;
+    padding-bottom: 2em;
+}
+input[type=submit], .visited-btn {
+    height: 2.5em;
+    background-color: red;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+}
+.modal {
+    display: none;
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+}
+.modal-content {
+    background-color: #fefefe;
+    margin: 10% auto;
+    padding: 2em;
+    width: 45%;
+}
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 2em;
+    font-weight: bold;
+}
+.close:hover, .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+.rate-stars {
+    unicode-bidi: bidi-override;
+    direction: rtl;
+    float: left;
+    margin: 1em 0em;
+}
+.rate-stars input {
+    display: none;
+}
+.rate-stars label:before {
+    content: "\2605";
+    font-size: 3em;
+    color: lightgray;
+}
+.rate-stars input:hover ~ label:before,
+.rate-stars input:checked ~ label:before {
+    color: red;
+}
+.review-box {
+    display: block;
+    margin-bottom: 1em;
+    width: 50em;
+    height: 20em;
+}
+.user-info {
+    display: inline-block;
+    width: 35%;
+}
+.user-reviews {
+    display: inline-block;
+    vertical-align: top;
+    width: 55%;
+}
+.user-info h2 {
+    padding-bottom: 1em;
+}
+.user-reviews p {
+    font-size: 1.5em;
+}
+.review-break {
+    border: 1px solid black;
+    margin: 3em 0em;
+}
+.places-reviewed {
+    min-height: 47em;
+}

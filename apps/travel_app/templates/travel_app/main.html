@@ -1,0 +1,109 @@
+{% extends "./base.html" %}
+{% load staticfiles %}
+{% block content %}
+<div class="head-container">
+    <div class="page-header">
+        <form action="/main" method="get">
+            <input type="text" placeholder="Where Are You?" name="location" style="width: 20em; height: 2.5em;">
+            <input type="submit" value="Search">
+        </form>
+    </div>
+</div>
+<div class="body-container">
+    <div class="page-body">
+        <div class="categories">
+            <form action="/main" method="get">
+                <div class="category">
+                    <h3>Food</h3>
+                    <label for="food-cat"><img src="{% static 'travel_app/img/food.png' %}" alt="food" class="category-img"></label>
+                    <input type="radio" id="food-cat" name="category" value="food" onchange="this.form.submit()">
+                </div>
+                <div class="category">
+                    <h3>Shopping</h3>
+                    <label for="shopping-cat"><img src="{% static 'travel_app/img/shopping.png' %}" alt="shopping" class="category-img"></label>
+                    <input type="radio" id="shopping-cat" name="category" value="shops" onchange="this.form.submit()">
+                </div>
+                <div class="category">
+                    <h3>Outdoor</h3>
+                    <label for="outdoor-cat"><img src="{% static 'travel_app/img/outdoor.png' %}" alt="outdoors" class="category-img"></label>
+                    <input type="radio" id="outdoor-cat" name="category" value="outdoors" onchange="this.form.submit()">
+                </div>
+                <div class="category">
+                    <h3>Drinks</h3>
+                    <label for="drinks-cat"><img src="{% static 'travel_app/img/drinks.png' %}" alt="drinks" class="category-img"></label>
+                    <input type="radio" id="drinks-cat" name="category" value="drinks" onchange="this.form.submit()">
+                </div>
+            </form>
+        </div>
+        <div class="places-list">
+            {% for place in data.response.groups.0.items %}
+                <div class="places-info">
+                    <h2><a href="/place/{{ place.venue.id }}">{{ place.venue.name }}</a></h2>
+                    <p>{{ place.venue.location.address }}, {{ place.venue.location.city }}, {{ place.venue.location.state }}</p>
+                </div>
+            {% endfor %}
+            <form action="/main" method="get">
+                <div class="pagination">
+                    <p style="display: inline;">Page:</p>
+                    {% if page == 1 %}
+                        <input type="radio" name="page_number" value=1 onchange="this.form.submit()" checked>1
+                    {% endif %}
+                    {% if not page == 1 %}
+                        <label>
+                            <input type="radio" name="page_number" value=1 onchange="this.form.submit()">1
+                        </label>
+                    {% endif %}
+                    {% if page == 2 %}
+                        <input type="radio" name="page_number" value=2 onchange="this.form.submit()" checked>2
+                    {% endif %}
+                    {% if not page == 2 %}
+                        <label>
+                            <input type="radio" name="page_number" value=2 onchange="this.form.submit()">2
+                        </label>
+                    {% endif %}
+                    {% if page == 3 %}
+                        <input type="radio" name="page_number" value=3 onchange="this.form.submit()" checked>3
+                    {% endif %}
+                    {% if not page == 3 %}
+                        <label>
+                            <input type="radio" name="page_number" value=3 onchange="this.form.submit()">3
+                        </label>
+                    {% endif %}
+                    {% if page == 4 %}
+                        <input type="radio" name="page_number" value=4 onchange="this.form.submit()" checked>4
+                    {% endif %}
+                    {% if not page == 4 %}
+                        <label>
+                            <input type="radio" name="page_number" value=4 onchange="this.form.submit()">4
+                        </label>
+                    {% endif %}
+                    {% if page == 5 %}
+                        <input type="radio" name="page_number" value=5 onchange="this.form.submit()" checked>5
+                    {% endif %}
+                    {% if not page == 5 %}
+                        <label>
+                            <input type="radio" name="page_number" value=5 onchange="this.form.submit()">5
+                        </label>
+                    {% endif %}
+                </div>
+            </form>
+        </div>
+        <div class="side-bar">
+            <div class="side-top">
+                <h1>TOP PLACES</h1>
+                {% for t in top %}
+                    {% if t.avg_rating %}
+                        <p style="font-size: 1.5em;">{{ t.name }} - {{ t.avg_rating }} stars</p>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <div class="side-popular">
+                <h1>POPULAR PLACES</h1>
+                {% for pop in popular %}
+                    <p style="font-size: 1.5em;">{{ pop.name }} - {{ pop.reviews.count }} reviews</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

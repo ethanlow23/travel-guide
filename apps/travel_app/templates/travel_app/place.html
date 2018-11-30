@@ -1,0 +1,154 @@
+{% extends "./base.html" %}
+{% load staticfiles %}
+{% block content %}
+<div class="body-container">
+    <div class="page-body">
+        <div class="place-header">
+            <div class="place-img">
+                <img src="{{ data.response.venue.bestPhoto.prefix }}250x250{{ data.response.venue.bestPhoto.suffix }}" alt="uh oh">
+            </div>
+            <div class="place-info">
+                <h1>{{ data.response.venue.name }}</h1>
+                <form action="/visited/{{ data.response.venue.id }}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="place" value="{{ data.response.venue.name }}">
+                    {% if user_place %}
+                        <button class="visited-btn" disabled>I have been here!</button>
+                    {% endif %}
+                    {% if not user_place and request.session.id %}
+                        <input type="submit" value="I have been here!">
+                    {% endif %}
+                </form>
+                {% if not request.session.id %}
+                    <a href="/"><button class="visited-btn">I have been here!</button></a>
+                {% endif %}
+                <div class="place-rating"><span class="stars"></span><span style="font-size: 2em;"> | No. of Reviews: {{ reviews.count }}</span></div>
+                {% if data.response.venue.description %}
+                    <p>{{ data.response.venue.description }}</p>
+                {% endif %}
+                {% if not data.response.venue.description %}
+                    <p>No Description Available</p>
+                {% endif %}
+                {% for message in messages %}
+                    <h1 class="error">{{message}}</h1>
+                {% endfor %}
+                {% if user_place %}
+                    <button id="review-btn">Write a Review</button>
+                {% endif %}
+                {% if not user_place %}
+                    <button disabled>Write a Review!</button>
+                {% endif %}
+            </div>
+        </div>
+        <div class="place-body">
+            <div id="map"></div>
+        </div>
+        <div id="myModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <form action="/review/{{ data.response.venue.id }}" method="post">
+                    {% csrf_token %}
+                    <h2>Review {{ data.response.venue.name }}</h2>
+                    <div class="rate-stars">
+                        <input type="radio" id="star5" name="rating" value=5>
+                        <label for="star5"></label>
+                        <input type="radio" id="star4" name="rating" value=4>
+                        <label for="star4"></label>
+                        <input type="radio" id="star3" name="rating" value=3>
+                        <label for="star3"></label>
+                        <input type="radio" id="star2" name="rating" value=2>
+                        <label for="star2"></label>
+                        <input type="radio" id="star1" name="rating" value=1>
+                        <label for="star1"></label>
+                    </div>
+                    <textarea name="description" class="review-box" placeholder="Write your review"></textarea>
+                    <input type="hidden" name="place" value="{{ data.response.venue.name }}">
+                    <input type="submit" value="Post Review">
+                </form>
+            </div>
+        </div>
+        <div class="side-info">
+            {% if data.response.venue.hours.status %}
+                <h2>Status: {{ data.response.venue.hours.status }}</h2>
+            {% endif %}
+            {% if not data.response.venue.hours.status %}
+                <h2>Status: N/a</h2>
+            {% endif %}
+            {% if data.response.venue.url %}
+                <h3>Website: <a href="{{ data.response.venue.url }}">{{ data.response.venue.url }}</a></h3>
+            {% endif %}
+            {% if not data.response.venue.url %}
+                <h3>Website: N/a</h3>
+            {% endif %}
+            {% if data.response.venue.location.formattedAddress %}
+                <h3>Address: </h3>
+                <ul>
+                    {% for address in data.response.venue.location.formattedAddress %}
+                        <li>{{ address }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            {% if not data.response.venue.location.formattedAddress %}
+                <h3>Address: N/a</h3>
+            {% endif %}
+            {% if data.response.venue.contact.formattedPhone %}
+                <h3>Phone: {{ data.response.venue.contact.formattedPhone }}</h3>
+            {% endif %}
+            {% if not data.response.venue.contact.formattedPhone %}
+                <h3>Phone: N/a</h3>
+            {% endif %}
+            {% if data.response.venue.categories %}
+                <h3>Categories: </h3>
+                <ul>
+                    {% for category in data.response.venue.categories %}
+                    <li>{{ category.name }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            {% if not data.response.venue.categories %}
+                <h3>Categories: N/a</h3>
+            {% endif %}
+            {% if data.response.venue.hours.timeframes %}
+                <h3>Schedule:</h3>
+                <ul>
+                    {% for schedule in data.response.venue.hours.timeframes %}
+                        <li>{{ schedule.days }}</li>
+                        {% for time in schedule.open %}
+                            <li>{{ time.renderedTime }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            {% if not data.response.venue.hours.timeframes %}
+                <h3>Schedule: N/a</h3>
+            {% endif %}
+        </div>
+        <div class="place-reviews">
+            <h1>REVIEWS</h1>
+            {% if reviews %}
+                {% for review in reviews %}
+                    <p class="review-desc">[{{ review.rating }} stars] {{ review.description }}</p>
+                    <p class="review-user">- <a href="/profile/{{ review.user.id }}">{{ review.user.username }}</a> {{ review.created_at }}</p>
+                {% endfor %}
+            {% endif %}
+            {% if not reviews %}
+                <p>Be the first to review</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var latitude = "{{ data.response.venue.location.lat }}";
+    var longitude = "{{ data.response.venue.location.lng }}";
+    var star = "{% static 'travel_app/img/star-rating.png' %}";
+    if ("{{ place.avg_rating }}") {
+        for(var i=1; i<="{{ place.avg_rating }}"; i++) {
+            $('.stars').append('<img src="' + star + '" alt="stars" class="place-stars">')
+        }
+        if("{{ place.avg_rating }}" % 1 >= 0.3) {
+            $('.stars').append('<span class="half"></span><img src="' + star + '" alt="stars" class="place-stars">')
+        }
+    };
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=API_KEY&callback=initMap" async defer></script>
+{% endblock content %}

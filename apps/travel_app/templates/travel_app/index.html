@@ -1,0 +1,24 @@
+{% extends "./base.html" %}
+
+{% block content %}
+{% for message in messages %}
+<h1 class="error">{{message}}</h1>
+{% endfor %}
+<div class="register">
+    <h1>Registration</h1>
+    <form action="/register" method="post">
+        {% csrf_token %}
+        <label for="first_name">First Name</label>
+        <input type="text" id="first_name" name="first_name">
+        <label for="last_name">Last Name</label>
+        <input type="text" id="last_name" name="last_name">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password">
+        <label for="confirm">Confirm Password</label>
+        <input type="password" id="confirm" name="confirm_pw">
+        <input type="submit" value="register">
+    </form>
+</div>
+{% endblock content %}
